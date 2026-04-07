@@ -16,7 +16,7 @@
     <div class="container py-5">
         <div class="row align-items-center">
             <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">Data Science & AI/ML Engineer</h1>
+                <h1 class="display-4 fw-bold mb-4">{% if about and about.post %}{{ about.post }}{% else %}Data Science & AI/ML Engineer{% endif %}</h1>
                 <p class="lead mb-4">Building intelligent solutions with machine learning, deep learning, and data science. Passionate about transforming data into actionable insights.</p>
                 <div class="d-flex gap-3">
                     <a href="{{ url_for('projects') }}" class="btn btn-primary btn-lg">
