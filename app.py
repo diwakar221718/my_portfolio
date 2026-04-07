@@ -34,6 +34,10 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True,
+    'pool_recycle': 3600,
+}
 
 # File Upload Configuration
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'resumes')
@@ -1140,15 +1144,11 @@ def server_error(error):
 def inject_about():
     """Inject about info into all templates"""
     try:
-        # Check if About table exists before querying
-        if db.engine.dialect.has_table(db.engine.connect(), 'about'):
-            about = About.query.first()
-        else:
-            about = None
+        # Try to query About, but catch any errors
+        about = About.query.first()
         return dict(about=about)
     except Exception as e:
         # If any error occurs, return None
-        print(f"⚠ Error loading about info: {e}")
         return dict(about=None)
 
 
