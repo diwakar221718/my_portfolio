@@ -1140,10 +1140,14 @@ def server_error(error):
 def inject_about():
     """Inject about info into all templates"""
     try:
-        about = About.query.first()
+        # Check if About table exists before querying
+        if db.engine.dialect.has_table(db.engine.connect(), 'about'):
+            about = About.query.first()
+        else:
+            about = None
         return dict(about=about)
     except Exception as e:
-        # If database query fails, return empty dict
+        # If any error occurs, return None
         print(f"⚠ Error loading about info: {e}")
         return dict(about=None)
 
