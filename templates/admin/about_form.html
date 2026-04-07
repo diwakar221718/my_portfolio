@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Edit About - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Edit About Me</h1>
+            
+            <form method="POST" class="mt-4" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="biography" class="form-label">Biography</label>
+                    <textarea class="form-control" id="biography" name="biography" rows="10" placeholder="Write your biography here...&#10;&#10;You can write:&#10;- Point-wise (each point on new line)&#10;- Paragraph-wise (separate paragraphs with blank line)&#10;&#10;Example:&#10;Passionate data scientist with 5+ years experience.&#10;&#10;Specialized in machine learning and deep learning.&#10;&#10;Love solving complex problems.">{{ about.biography if about else '' }}</textarea>
+                    <small class="text-muted d-block mt-2">
+                        <strong>Formatting Tips:</strong>
+                        <ul class="mb-0 mt-1">
+                            <li>For <strong>point-wise</strong>: Write each point on a new line</li>
+                            <li>For <strong>paragraph-wise</strong>: Separate paragraphs with a blank line (press Enter twice)</li>
+                            <li>Paragraphs will be automatically separated with line gaps</li>
+                        </ul>
+                    </small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="photo_file" class="form-label">Profile Photo</label>
+                    <input type="file" class="form-control" id="photo_file" name="photo_file" accept="image/*">
+                    <small class="text-muted">Upload JPG, PNG, or other image formats</small>
+                    {% if about and about.photo_url %}
+                    <div class="mt-2">
+                        <p class="text-muted mb-2">Current photo:</p>
+                        <img src="{{ about.photo_url }}" alt="Current Photo" style="max-width: 150px; border-radius: 10px;">
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" placeholder="e.g., New York, USA" value="{{ about.address if about else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="post" class="form-label">Post / Designation</label>
+                    <input type="text" class="form-control" id="post" name="post" placeholder="e.g., Data Scientist" value="{{ about.post if about else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="research_interests" class="form-label">Areas of Interest (comma-separated)</label>
+                    <textarea class="form-control" id="research_interests" name="research_interests" rows="3" placeholder="e.g., Machine Learning, Data Analysis, AI">{{ about.research_interests if about else '' }}</textarea>
+                </div>
+                
+                <hr class="my-4">
+                <h5 class="mb-3">Social Media Links</h5>
+                
+                <div class="mb-3">
+                    <label for="github_url" class="form-label">GitHub URL</label>
+                    <input type="url" class="form-control" id="github_url" name="github_url" placeholder="https://github.com/username" value="{{ about.github_url if about else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="linkedin_url" class="form-label">LinkedIn URL</label>
+                    <input type="url" class="form-control" id="linkedin_url" name="linkedin_url" placeholder="https://linkedin.com/in/username" value="{{ about.linkedin_url if about else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="kaggle_url" class="form-label">Kaggle URL</label>
+                    <input type="url" class="form-control" id="kaggle_url" name="kaggle_url" placeholder="https://kaggle.com/username" value="{{ about.kaggle_url if about else '' }}">
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        Save Changes
+                    </button>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary ms-auto">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

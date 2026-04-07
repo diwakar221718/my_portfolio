@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}{% if resume %}Edit{% else %}Add{% endif %} Resume - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>{% if resume %}Edit Resume{% else %}Add New Resume{% endif %}</h1>
+            
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            
+            <form method="POST" enctype="multipart/form-data" class="mt-4">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Resume Title *</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="e.g., Data Scientist Resume" value="{{ resume.title if resume else '' }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="version" class="form-label">Version</label>
+                    <input type="text" class="form-control" id="version" name="version" placeholder="e.g., v1.0, v2.1" value="{{ resume.version if resume else '' }}">
+                </div>
+                
+                <!-- Toggle between Upload and Link -->
+                <div class="mb-3">
+                    <label class="form-label">Resume Source *</label>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="source_type" id="source_upload" value="upload" {% if resume and resume.file_path %}checked{% endif %} onchange="toggleResumeSource()">
+                        <label class="btn btn-outline-primary" for="source_upload">Upload PDF</label>
+                        
+                        <input type="radio" class="btn-check" name="source_type" id="source_link" value="link" {% if not resume or (resume and resume.file_url and not resume.file_path) %}checked{% endif %} onchange="toggleResumeSource()">
+                        <label class="btn btn-outline-primary" for="source_link">External Link</label>
+                    </div>
+                </div>
+                
+                <!-- File Upload Section -->
+                <div id="upload_section" class="mb-3" style="display: {% if resume and resume.file_path %}block{% else %}none{% endif %};">
+                    <label for="resume_file" class="form-label">Upload PDF File</label>
+                    <input type="file" class="form-control" id="resume_file" name="resume_file" accept=".pdf" onchange="updateFileName()">
+                    <small class="text-muted">
+                        Maximum file size: 10MB. Only PDF files are allowed.
+                        {% if resume and resume.file_path %}
+                        <br><strong>Current file:</strong> {{ resume.file_path.split('/')[-1] }}
+                        {% endif %}
+                    </small>
+                </div>
+                
+                <!-- URL Section -->
+                <div id="url_section" class="mb-3" style="display: {% if not resume or (resume and resume.file_url and not resume.file_path) %}block{% else %}none{% endif %};">
+                    <label for="file_url" class="form-label">Resume File URL</label>
+                    <input type="url" class="form-control" id="file_url" name="file_url" placeholder="https://example.com/resume.pdf" value="{{ resume.file_url if resume else '' }}">
+                    <small class="text-muted">Link to your PDF resume (Google Drive, Dropbox, etc.)</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Brief description of this resume version">{{ resume.description if resume else '' }}</textarea>
+                </div>
+                
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="is_active" name="is_active" {% if resume and resume.is_active %}checked{% endif %}>
+                    <label class="form-check-label" for="is_active">
+                        Set as Active Resume (shown on portfolio)
+                    </label>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        {% if resume %}Update Resume{% else %}Add Resume{% endif %}
+                    </button>
+                    <a href="{{ url_for('admin_resume') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary ms-auto">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleResumeSource() {
+    const uploadSection = document.getElementById('upload_section');
+    const urlSection = document.getElementById('url_section');
+    const sourceType = document.querySelector('input[name="source_type"]:checked').value;
+    
+    if (sourceType === 'upload') {
+        uploadSection.style.display = 'block';
+        urlSection.style.display = 'none';
+        document.getElementById('file_url').removeAttribute('required');
+    } else {
+        uploadSection.style.display = 'none';
+        urlSection.style.display = 'block';
+        document.getElementById('file_url').setAttribute('required', 'required');
+    }
+}
+
+function updateFileName() {
+    const fileInput = document.getElementById('resume_file');
+    const fileName = fileInput.files[0]?.name || '';
+    if (fileName) {
+        const small = document.querySelector('#upload_section small');
+        small.innerHTML = `Maximum file size: 10MB. Only PDF files are allowed.<br><strong>Selected file:</strong> ${fileName}`;
+    }
+}
+</script>
+{% endblock %}

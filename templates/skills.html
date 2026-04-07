@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Skills - Diwakar Yadav {% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 text-center">Skills & Expertise</h1>
+        <p class="text-center">Technical skills and proficiencies in data science and AI/ML</p>
+    </div>
+</section>
+
+<!-- Skills by Category -->
+<section class="py-5" id="skills-section" style="background: linear-gradient(135deg, #1a2a3a 0%, #2d3e50 100%);">
+    <div class="container">
+        <div class="row g-4">
+            {% for category, skills in skills_by_category.items() %}
+            <div class="col-lg-6">
+                <div class="skills-category-card">
+                    <h4 class="skills-category-title">{{ category }}</h4>
+                    <div class="skills-list">
+                        {% for skill in skills %}
+                        <div>
+                        <span class="skill-box">{{ skill.name }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Certifications Section -->
+{% if certifications %}
+<section class="py-5" id="certifications-section" style="background: linear-gradient(135deg, #1a2a3a 0%, #2d3e50 100%);">
+    <div class="container">
+        <h3 class="mb-5 text-center" style="color: white; font-size: 2rem; font-weight: 600;">Certifications & Credentials</h3>
+        <div class="row g-4">
+            {% for cert in certifications %}
+            <div class="col-12">
+                <div class="certification-card-new">
+                    <!-- Icon Section (Left) -->
+                    <div class="cert-icon-box">
+                        {% if cert.image_url %}
+                        <img src="{{ cert.image_url }}" alt="{{ cert.title }}" class="cert-icon-image">
+                        {% else %}
+                        <i class="fas fa-certificate"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Content Section (Right) -->
+                    <div class="cert-content-new">
+                        <h5 class="cert-title-new">{{ cert.title }}</h5>
+                        {% if cert.issuer %}
+                        <p class="cert-issuer-new"><strong>Issuing Organization:</strong> {{ cert.issuer }}</p>
+                        {% endif %}
+                        
+                        <div class="cert-tags">
+                            {% if cert.issue_date %}
+                            <span class="cert-tag">
+                                <strong>Issue Date:</strong> {{ cert.issue_date.strftime('%b %Y') }}
+                            </span>
+                            {% else %}
+                            <span class="cert-tag">
+                                <strong>Issue Date:</strong> N/A
+                            </span>
+                            {% endif %}
+                            {% if cert.expiry_date %}
+                            <span class="cert-tag">
+                                <strong>Expiry Date:</strong> {{ cert.expiry_date.strftime('%b %Y') }}
+                            </span>
+                            {% else %}
+                            <span class="cert-tag">
+                                <strong>Expiry Date:</strong> N/A
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                        {% if cert.description %}
+                        <p class="cert-description-new">{{ cert.description }}</p>
+                        {% endif %}
+                        
+                        <div class="cert-buttons-right">
+                            {% if cert.credential_url %}
+                            <a href="{{ cert.credential_url }}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fas fa-external-link-alt"></i> View Details
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - Project{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav class="py-3 border-bottom">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('projects') }}">Projects</a></li>
+            <li class="breadcrumb-item active">{{ project.title }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Project Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3">{{ project.title }}</h1>
+                <p class="lead text-muted">{{ project.description }}</p>
+                
+                <div class="d-flex gap-3 mb-4">
+                    {% if project.github_url %}
+                    <a href="{{ project.github_url }}" target="_blank" class="btn btn-dark">
+                        <i class="fab fa-github"></i> GitHub Repository
+                    </a>
+                    {% endif %}
+                    {% if project.notebook_url %}
+                    <a href="{{ project.notebook_url }}" target="_blank" class="btn btn-warning">
+                        <i class="fas fa-notebook"></i> Jupyter Notebook
+                    </a>
+                    {% endif %}
+                    {% if project.demo_url %}
+                    <a href="{{ project.demo_url }}" target="_blank" class="btn btn-success">
+                        <i class="fas fa-play"></i> Live Demo
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                {% if project.image_url %}
+                <img src="{{ project.image_url }}" alt="{{ project.title }}" class="img-fluid rounded shadow">
+                {% else %}
+                <div class="bg-light rounded shadow d-flex align-items-center justify-content-center" style="height: 300px;">
+                    <i class="fas fa-image text-muted fa-5x"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Overview -->
+                {% if project.detailed_description %}
+                <div class="mb-5">
+                    <h3 class="mb-3">Project Overview</h3>
+                    <p>{{ project.detailed_description }}</p>
+                </div>
+                {% endif %}
+
+                <!-- Technologies -->
+                {% if project.technologies %}
+                <div class="mb-5">
+                    <h3 class="mb-3">Technologies Used</h3>
+                    <div>
+                        {% for tech in project.technologies.split(',') %}
+                        <span class="badge bg-primary me-2 mb-2" style="font-size: 0.9rem; padding: 0.5rem 0.75rem;">
+                            {{ tech.strip() }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Performance Metrics -->
+                {% if project.performance_metrics %}
+                <div class="mb-5">
+                    <h3 class="mb-3">Performance Metrics</h3>
+                    <div class="alert alert-info">
+                        <p>{{ project.performance_metrics }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Outcomes -->
+                {% if project.outcomes %}
+                <div class="mb-5">
+                    <h3 class="mb-3">Outcomes & Impact</h3>
+                    <p>{{ project.outcomes }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Project Info Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Project Information</h5>
+                        
+                        <div class="mb-3">
+                            <strong>Category:</strong>
+                            <span class="badge bg-primary">{{ project.category }}</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Completion Date:</strong>
+                            <p class="text-muted">{{ project.completion_date.strftime('%B %d, %Y') if project.completion_date else 'N/A' }}</p>
+                        </div>
+                        
+                        {% if project.role %}
+                        <div class="mb-3">
+                            <strong>Role:</strong>
+                            <p class="text-muted">{{ project.role }}</p>
+                        </div>
+                        {% endif %}
+                        
+                        <hr>
+                        
+                        <h6 class="mb-3">Quick Links</h6>
+                        <div class="d-grid gap-2">
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" target="_blank" class="btn btn-sm btn-outline-dark">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                            {% endif %}
+                            {% if project.notebook_url %}
+                            <a href="{{ project.notebook_url }}" target="_blank" class="btn btn-sm btn-outline-warning">
+                                <i class="fas fa-notebook"></i> Jupyter Notebook
+                            </a>
+                            {% endif %}
+                            {% if project.demo_url %}
+                            <a href="{{ project.demo_url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-play"></i> Live Demo
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share Card -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Share Project</h5>
+                        <div class="d-flex gap-2">
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ request.url }}')">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Projects -->
+{% if related_projects %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h3 class="mb-4">Related Projects</h3>
+        <div class="row g-4">
+            {% for related in related_projects %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm hover-card">
+                    {% if related.image_url %}
+                    <img src="{{ related.image_url }}" class="card-img-top" alt="{{ related.title }}" style="height: 150px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                        <i class="fas fa-project-diagram text-muted fa-2x"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ related.title }}</h6>
+                        <p class="card-text small text-muted">{{ related.description[:60] }}...</p>
+                        <a href="{{ url_for('project_detail', project_id=related.id) }}" class="btn btn-sm btn-primary">
+                            View Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

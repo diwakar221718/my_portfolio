@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - Data Science & AI/ML Portfolio{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 text-center">Get in Touch</h1>
+        <p class="text-center">Let's connect and discuss opportunities</p>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Contact Form -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-5">
+                        <h3 class="card-title mb-4">Send Me a Message</h3>
+                        
+                        <form method="POST" id="contactForm">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="inquiry_type" class="form-label">Inquiry Type</label>
+                                <select class="form-select" id="inquiry_type" name="inquiry_type">
+                                    <option value="general">General Inquiry</option>
+                                    <option value="collaboration">Collaboration</option>
+                                    <option value="job">Job Opportunity</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Subject *</label>
+                                <input type="text" class="form-control" id="subject" name="subject" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message *</label>
+                                <textarea class="form-control" id="message" name="message" rows="6" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-4">
+                <!-- Quick Contact Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Quick Contact</h5>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-2">
+                                <i class="fas fa-envelope text-primary"></i> Email
+                            </h6>
+                            <p class="text-muted">
+                                <a href="mailto:your.email@example.com" class="text-decoration-none">
+                                    dyadav221718@gmail.com
+                                </a>
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-2">
+                                <i class="fas fa-phone text-primary"></i> Phone
+                            </h6>
+                            <p class="text-muted">
+                                <a href="tel:+1234567890" class="text-decoration-none">
+                                    +91 9511488694
+                                </a>
+                            </p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h6 class="mb-2">
+                                <i class="fas fa-map-marker-alt text-primary"></i> Location
+                            </h6>
+                            <p class="text-muted">Ballia, India</p>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h6 class="mb-3">Follow Me</h6>
+                        <div class="d-flex gap-2">
+                            {% if about and about.github_url %}
+                            <a href="{{ about.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            {% if about and about.linkedin_url %}
+                            <a href="{{ about.linkedin_url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if about and about.kaggle_url %}
+                            <a href="{{ about.kaggle_url }}" target="_blank" class="btn btn-outline-danger btn-sm">
+                                <i class="fab fa-kaggle"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Response Time Card -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Response Time</h5>
+                        <p class="text-muted">
+                            I typically respond to messages within <strong>24-48 hours</strong>. For urgent matters, please mention it in your message.
+                        </p>
+                        <div class="alert alert-info mb-0">
+                            <i class="fas fa-info-circle"></i> All fields marked with * are required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h3 class="mb-4">Frequently Asked Questions</h3>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        What services do you offer?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        I offer machine learning consulting, data analysis, model development, and AI/ML project implementation.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        What is your typical project timeline?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Project timelines vary based on scope and complexity. Typically, projects range from 2-12 weeks. We'll discuss specifics during our initial consultation.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        Do you work with startups?
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes! I work with startups, enterprises, and everything in between. I'm flexible with project scope and budget.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                        How can I get a quote?
+                    </button>
+                </h2>
+                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Send me a message with details about your project, and I'll get back to you with a quote and timeline within 48 hours.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

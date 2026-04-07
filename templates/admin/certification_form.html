@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}{% if certification %}Edit{% else %}Add{% endif %} Certification - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 style="color: #333;">{% if certification %}Edit Certification{% else %}Add New Certification{% endif %}</h1>
+            
+            <form method="POST" class="mt-4">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Certification Title *</label>
+                    <input type="text" class="form-control" id="title" name="title" placeholder="e.g., AWS Certified Solutions Architect" value="{{ certification.title if certification else '' }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="issuer" class="form-label">Issuing Organization *</label>
+                    <input type="text" class="form-control" id="issuer" name="issuer" placeholder="e.g., Amazon Web Services" value="{{ certification.issuer if certification else '' }}" required>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="issue_date" class="form-label">Issue Date</label>
+                        <input type="date" class="form-control" id="issue_date" name="issue_date" value="{{ certification.issue_date.strftime('%Y-%m-%d') if certification and certification.issue_date else '' }}">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="expiry_date" class="form-label">Expiry Date</label>
+                        <input type="date" class="form-control" id="expiry_date" name="expiry_date" value="{{ certification.expiry_date.strftime('%Y-%m-%d') if certification and certification.expiry_date else '' }}">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="credential_url" class="form-label">Credential URL</label>
+                    <input type="url" class="form-control" id="credential_url" name="credential_url" placeholder="https://..." value="{{ certification.credential_url if certification else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="image_url" class="form-label">Certificate Image URL</label>
+                    <input type="url" class="form-control" id="image_url" name="image_url" placeholder="https://..." value="{{ certification.image_url if certification else '' }}">
+                    <small class="text-muted">URL to certificate badge or logo image</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Brief description of the certification...">{{ certification.description if certification else '' }}</textarea>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        {% if certification %}Update Certification{% else %}Add Certification{% endif %}
+                    </button>
+                    <a href="{{ url_for('admin_certifications') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary ms-auto">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    body:not(.dark-mode) h1 {
+        color: #333 !important;
+    }
+    
+    body:not(.dark-mode) .form-label {
+        color: #333 !important;
+        font-weight: 500;
+    }
+    
+    body:not(.dark-mode) .form-control {
+        background-color: #fff !important;
+        color: #333 !important;
+        border-color: #ddd !important;
+    }
+    
+    body:not(.dark-mode) .form-control:focus {
+        background-color: #fff !important;
+        color: #333 !important;
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    
+    body.dark-mode .form-label {
+        color: #e0e0e0 !important;
+    }
+</style>
+{% endblock %}

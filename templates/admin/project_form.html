@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}{% if project %}Edit{% else %}Add{% endif %} Project - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>{% if project %}Edit Project{% else %}Add New Project{% endif %}</h1>
+            
+            <form method="POST" class="mt-4">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Project Title *</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ project.title if project else '' }}" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="description" class="form-label">Short Description *</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required>{{ project.description if project else '' }}</textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="detailed_description" class="form-label">Detailed Description</label>
+                    <textarea class="form-control" id="detailed_description" name="detailed_description" rows="5">{{ project.detailed_description if project else '' }}</textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="category" name="category" placeholder="e.g., Classification, NLP, Computer Vision" value="{{ project.category if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="technologies" class="form-label">Technologies (comma-separated)</label>
+                    <input type="text" class="form-control" id="technologies" name="technologies" placeholder="e.g., Python, TensorFlow, Scikit-learn" value="{{ project.technologies if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="role" class="form-label">Your Role</label>
+                    <input type="text" class="form-control" id="role" name="role" placeholder="e.g., Lead Data Scientist" value="{{ project.role if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="completion_date" class="form-label">Completion Date</label>
+                    <input type="date" class="form-control" id="completion_date" name="completion_date" value="{{ project.completion_date.strftime('%Y-%m-%d') if project and project.completion_date else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="image_url" class="form-label">Image URL</label>
+                    <input type="url" class="form-control" id="image_url" name="image_url" value="{{ project.image_url if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="github_url" class="form-label">GitHub URL</label>
+                    <input type="url" class="form-control" id="github_url" name="github_url" value="{{ project.github_url if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="notebook_url" class="form-label">Notebook URL (Kaggle, Colab, etc.)</label>
+                    <input type="url" class="form-control" id="notebook_url" name="notebook_url" value="{{ project.notebook_url if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="demo_url" class="form-label">Demo URL</label>
+                    <input type="url" class="form-control" id="demo_url" name="demo_url" value="{{ project.demo_url if project else '' }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="outcomes" class="form-label">Key Outcomes</label>
+                    <textarea class="form-control" id="outcomes" name="outcomes" rows="3">{{ project.outcomes if project else '' }}</textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="performance_metrics" class="form-label">Performance Metrics</label>
+                    <input type="text" class="form-control" id="performance_metrics" name="performance_metrics" placeholder="e.g., Accuracy: 95%, F1-Score: 0.92" value="{{ project.performance_metrics if project else '' }}">
+                </div>
+                
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="featured" name="featured" {% if project and project.featured %}checked{% endif %}>
+                    <label class="form-check-label" for="featured">
+                        Featured on Home Page (Show in top 5 featured projects)
+                    </label>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        {% if project %}Update Project{% else %}Add Project{% endif %}
+                    </button>
+                    <a href="{{ url_for('admin_projects') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary ms-auto">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

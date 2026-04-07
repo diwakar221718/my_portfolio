@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+
+{% block title %}About - Diwakar Yadav{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 text-center">About Me</h1>
+        {% if about and about.biography %}
+        <p class="text-center">
+            {% set first_para = about.biography.split('\n\n')[0] %}
+            {{ first_para[:150] }}...
+        </p>
+        {% else %}
+        <p class="text-center">Professional background and expertise</p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5" id="about-section" style="background: linear-gradient(135deg, #1a2a3a 0%, #2d3e50 100%);">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Left: Circular Profile Photo with Post and Address -->
+            <div class="col-lg-4">
+                <div class="text-center">
+                    <div class="profile-image-container">
+                        {% if about and about.photo_url %}
+                        <img src="{{ about.photo_url }}" alt="Profile Photo">
+                        {% else %}
+                        <i class="fas fa-user fa-5x text-muted"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Post and Address below image - centered -->
+                    {% if about %}
+                        <div class="profile-info">
+                            <div>
+                            {% if about.post %}
+                            <h4 class="profile-designation">{{ about.post }}</h4>
+                            {% endif %}
+                            {% if about.address %}
+                            <p class="profile-address">
+                                <i class="fas fa-map-marker-alt"></i>{{ about.address }}
+                            </p>
+                            {% endif %}
+                            </div>
+                            
+                            <!-- Social Media Links -->
+                            <div class="social-links-about mt-4">
+                                {% if about.github_url %}
+                                <a href="{{ about.github_url }}" target="_blank" class="social-link-btn" title="GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                {% endif %}
+                                {% if about.linkedin_url %}
+                                <a href="{{ about.linkedin_url }}" target="_blank" class="social-link-btn" title="LinkedIn">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                {% endif %}
+                                {% if about.kaggle_url %}
+                                <a href="{{ about.kaggle_url }}" target="_blank" class="social-link-btn" title="Kaggle">
+                                    <i class="fab fa-kaggle"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Right: Biography, Research Interests, Specializations -->
+            <div class="col-lg-8">
+                {% if about %}
+                    <!-- Name Heading -->
+                    <h2 class="about-name mb-4" style="font-size: 2.5rem; font-weight: 700; color: white;">Diwakar Yadav</h2>
+                    
+                    {% if about.biography %}
+                    <div style="font-size: 1.1rem; line-height: 1.8;" class="biography-text">
+                        {% set paragraphs = about.biography.split('\n\n') %}
+                        {% for paragraph in paragraphs %}
+                            {% if paragraph.strip() %}
+                                {% set lines = paragraph.strip().split('\n') %}
+                                {% if lines|length > 1 %}
+                                    <!-- Point-wise format -->
+                                    <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                                        {% for line in lines %}
+                                            {% if line.strip() %}
+                                            <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <!-- Paragraph format -->
+                                    <p style="margin-bottom: 1.5rem;">{{ paragraph.strip() }}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if about.research_interests %}
+                    <div class="mb-4 mt-5">
+                        <h5 class="about-heading">Areas of Interest</h5>
+                        <div class="keywords-container">
+                            {% for interest in about.research_interests.split(',') %}
+                            <span class="keyword-badge">{{ interest.strip() }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Buttons below text -->
+                    <div class="d-flex gap-2 mt-5">
+                        <a href="{{ url_for('projects') }}" class="btn btn-primary">
+                            <i class="fas fa-project-diagram"></i> View Projects
+                        </a>
+                        <a href="{{ url_for('resume') }}" class="btn btn-success">
+                            <i class="fas fa-file-pdf"></i> View Resume
+                        </a>
+                    </div>
+                {% else %}
+                <p style="font-size: 1rem; line-height: 1.8;" class="biography-text">Welcome to my portfolio. I'm a Data Science and AI/ML Engineer passionate about building intelligent solutions.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+{% if education %}
+<section class="py-5" id="education-section" style="background: linear-gradient(135deg, #1a2a3a 0%, #2d3e50 100%);">
+    <div class="container">
+        <h3 class="mb-5 text-center about-heading" style="font-size: 2rem; font-weight: 600;">Education</h3>
+        <div class="row">
+            {% for edu in education %}
+            <div class="col-md-6 mb-4">
+                <div class="education-card-new">
+                    <div class="education-icon-new">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-content-new">
+                        <h5 class="education-degree-new">{{ edu.degree }}</h5>
+                        <p class="education-institution-new">{{ edu.institution_name }}</p>
+                        {% if edu.graduation_date %}
+                        <p class="education-date-new">Passing Year: {{ edu.graduation_date.strftime('%Y') }}</p>
+                        {% endif %}
+                        {% if edu.field_of_study or edu.marks %}
+                        <p class="education-description-new">
+                            {% if edu.field_of_study %}{{ edu.field_of_study }}{% endif %}
+                            {% if edu.field_of_study and edu.marks %} - {% endif %}
+                            {% if edu.marks %}{{ edu.marks }}{% endif %}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Professional Experience Section -->
+{% if experience %}
+<section class="py-5" id="experience-section" style="background: linear-gradient(135deg, #1a2a3a 0%, #2d3e50 100%);">
+    <div class="container">
+        <h3 class="mb-5 text-center about-heading" style="font-size: 2rem; font-weight: 600;">Professional Experience</h3>
+        <div class="row">
+            {% for exp in experience %}
+            <div class="col-12 mb-4">
+                <div class="experience-card-full">
+                    <div class="experience-card-wrapper">
+                        <div class="experience-icon-box">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="experience-content-wrapper">
+                            <div class="experience-header">
+                                <h5 class="experience-title">{{ exp.job_title }}</h5>
+                                <p class="experience-company">{{ exp.company_name }}</p>
+                                {% if exp.start_date %}
+                                <p class="experience-period">
+                                    {{ exp.start_date.strftime('%b %Y') }} - 
+                                    {% if exp.is_current %}
+                                    Present
+                                    {% else %}
+                                    {{ exp.end_date.strftime('%b %Y') }}
+                                    {% endif %}
+                                </p>
+                                {% endif %}
+                            </div>
+                            
+                            {% if exp.description %}
+                            <div class="experience-body">
+                                <p class="experience-description">{{ exp.description }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<style>
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #0d6efd;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #0d6efd;
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px #0d6efd;
+}
+
+/* About section styling */
+#about-section {
+    background: linear-gradient(135deg, #1a2a3a 0%, #2d3e50 100%) !important;
+}
+
+#about-section .biography-text {
+    color: #d0d8e0;
+    font-weight: 500;
+}
+
+#about-section .biography-text p {
+    color: #d0d8e0;
+    margin-bottom: 1.5rem;
+}
+
+#about-section .about-heading {
+    color: white;
+}
+
+#about-section .about-name {
+    color: white !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Light mode - override the dark background */
+body:not(.dark-mode) #about-section {
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%) !important;
+}
+
+body:not(.dark-mode) #about-section .biography-text {
+    color: #333 !important;
+}
+
+body:not(.dark-mode) #about-section .biography-text p {
+    color: #333 !important;
+}
+
+body:not(.dark-mode) #about-section .about-heading {
+    color: #1a1a1a !important;
+}
+
+body:not(.dark-mode) #about-section .about-name {
+    color: #1a1a1a !important;
+}
+
+/* Social Links Styling */
+.social-links-about {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.social-link-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.social-link-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    color: white;
+    text-decoration: none;
+}
+
+/* Dark mode styles */
+body.dark-mode #about-section .biography-text {
+    color: #d0d8e0 !important;
+}
+
+body.dark-mode #about-section .biography-text p {
+    color: #d0d8e0 !important;
+}
+
+body.dark-mode #about-section .about-heading {
+    color: white !important;
+}
+
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 0;
+    }
+    
+    .timeline-item {
+        padding-left: 30px;
+    }
+}
+</style>
+{% endblock %}

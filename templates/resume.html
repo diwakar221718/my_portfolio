@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Resume - Diwakar Yadav{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 text-center">My Resume</h1>
+        <p class="text-center">View and download my professional resume</p>
+    </div>
+</section>
+
+<section class="py-5 resume-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                {% if active_resume %}
+                <!-- PDF Viewer -->
+                {% if active_resume.file_path %}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-0">
+                        <iframe src="{{ url_for('static', filename=active_resume.file_path) }}" 
+                                style="width: 100%; height: 800px; border: none; border-radius: 0.25rem;">
+                        </iframe>
+                    </div>
+                </div>
+                {% elif active_resume.file_url %}
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body p-0">
+                        <iframe src="{{ active_resume.file_url }}" 
+                                style="width: 100%; height: 800px; border: none; border-radius: 0.25rem;">
+                        </iframe>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Centered Download Button -->
+                <div class="text-center">
+                    {% if active_resume.file_path %}
+                        <a href="{{ url_for('static', filename=active_resume.file_path) }}" class="btn btn-primary btn-lg" download>
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
+                    {% elif active_resume.file_url %}
+                        <a href="{{ active_resume.file_url }}" class="btn btn-primary btn-lg" download>
+                            <i class="fas fa-download"></i> Download Resume
+                        </a>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Resume not available yet.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

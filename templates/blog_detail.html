@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }} - Blog{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav class="py-3 border-bottom">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('blog') }}">Blog</a></li>
+            <li class="breadcrumb-item active">{{ article.title[:50] }}...</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Article Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3">{{ article.title }}</h1>
+        
+        <div class="d-flex gap-4 text-muted mb-4">
+            <span>
+                <i class="fas fa-calendar"></i> {{ article.published_date.strftime('%B %d, %Y') if article.published_date else 'N/A' }}
+            </span>
+        </div>
+
+        {% if article.tags %}
+        <div>
+            {% for tag in article.tags.split(',') %}
+            <a href="{{ url_for('blog', tag=tag.strip()) }}" class="badge bg-primary text-decoration-none me-2 mb-2">
+                {{ tag.strip() }}
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Article Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <div class="alert alert-info">
+                    <h5>External Article</h5>
+                    <p>This article is hosted externally. Click the button below to read the full article.</p>
+                    {% if article.external_url %}
+                    <a href="{{ article.external_url }}" target="_blank" class="btn btn-primary">
+                        <i class="fas fa-external-link-alt"></i> Read Full Article
+                    </a>
+                    {% else %}
+                    <p class="text-muted">N/A</p>
+                    {% endif %}
+                </div>
+
+                {% if article.summary %}
+                <div class="mb-5">
+                    <h3>Summary</h3>
+                    <p>{{ article.summary }}</p>
+                </div>
+                {% endif %}
+
+                <hr class="my-5">
+
+                <!-- Share -->
+                <div class="card shadow-sm mb-5">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Share This Article</h5>
+                        <div class="d-flex gap-2">
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" class="btn btn-outline-primary">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                            <button class="btn btn-outline-secondary" onclick="copyToClipboard('{{ request.url }}')">
+                                <i class="fas fa-link"></i> Copy Link
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Article Info Card -->
+                <div class="card shadow-sm mb-4 sticky-top" style="top: 80px;">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Article Info</h5>
+                        
+                        <div class="mb-3">
+                            <strong>Published:</strong>
+                            <p class="text-muted">{{ article.published_date.strftime('%B %d, %Y') if article.published_date else 'N/A' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Articles -->
+{% if related_articles %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h3 class="mb-4">Related Articles</h3>
+        <div class="row g-4">
+            {% for related in related_articles %}
+            <div class="col-md-4">
+                <article class="card h-100 shadow-sm hover-card">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <a href="{{ url_for('blog_detail', slug=related.slug) }}" class="text-decoration-none">
+                                {{ related.title }}
+                            </a>
+                        </h6>
+                        <p class="card-text small text-muted">{{ related.summary[:80] }}...</p>
+                        <div class="d-flex justify-content-between align-items-center text-muted small">
+                            <span>
+                                <i class="fas fa-calendar"></i> {{ related.published_date.strftime('%b %d') }}
+                            </span>
+                            <span>
+                                <i class="fas fa-clock"></i> {{ related.reading_time }} min
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a href="{{ url_for('blog_detail', slug=related.slug) }}" class="btn btn-sm btn-primary">
+                            Read More
+                        </a>
+                    </div>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Add CSS for article content -->
+<style>
+.article-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.article-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.article-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.article-content p {
+    margin-bottom: 1rem;
+}
+
+.article-content code {
+    background-color: #f5f5f5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+
+.article-content pre {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.article-content blockquote {
+    border-left: 4px solid #0d6efd;
+    padding-left: 1rem;
+    margin-left: 0;
+    color: #666;
+}
+
+.article-content ul, .article-content ol {
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+}
+
+.article-content li {
+    margin-bottom: 0.5rem;
+}
+
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    border-radius: 5px;
+}
+</style>
+{% endblock %}

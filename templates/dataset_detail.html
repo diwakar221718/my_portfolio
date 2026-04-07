@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}{{ dataset.name }} - Dataset{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<nav class="py-3 border-bottom">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('datasets') }}">Datasets</a></li>
+            <li class="breadcrumb-item active">{{ dataset.name }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Dataset Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3">{{ dataset.name }}</h1>
+        <p class="lead text-muted">{{ dataset.description }}</p>
+        
+        {% if dataset.download_url %}
+        <a href="{{ dataset.download_url }}" target="_blank" class="btn btn-success btn-lg">
+            <i class="fas fa-download"></i> Download Dataset
+        </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Dataset Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Overview -->
+                <div class="mb-5">
+                    <h3 class="mb-3">Dataset Overview</h3>
+                    <p>{{ dataset.description }}</p>
+                </div>
+
+                <!-- Specifications -->
+                <div class="mb-5">
+                    <h3 class="mb-3">Specifications</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td><strong>Data Type:</strong></td>
+                                <td><span class="badge bg-info">{{ dataset.data_type }}</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Format:</strong></td>
+                                <td>{{ dataset.format }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Size:</strong></td>
+                                <td>{{ dataset.size }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Created:</strong></td>
+                                <td>{{ dataset.creation_date.strftime('%B %d, %Y') }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Documentation -->
+                {% if dataset.documentation_url %}
+                <div class="mb-5">
+                    <h3 class="mb-3">Documentation</h3>
+                    <a href="{{ dataset.documentation_url }}" target="_blank" class="btn btn-outline-primary">
+                        <i class="fas fa-book"></i> View Documentation
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Dataset Info Card -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Dataset Information</h5>
+                        
+                        <div class="mb-3">
+                            <strong>Data Type:</strong>
+                            <p class="text-muted">
+                                <span class="badge bg-info">{{ dataset.data_type }}</span>
+                            </p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Format:</strong>
+                            <p class="text-muted">{{ dataset.format }}</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Size:</strong>
+                            <p class="text-muted">{{ dataset.size }}</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <strong>Created:</strong>
+                            <p class="text-muted">{{ dataset.creation_date.strftime('%B %d, %Y') }}</p>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h6 class="mb-3">Quick Links</h6>
+                        <div class="d-grid gap-2">
+                            {% if dataset.download_url %}
+                            <a href="{{ dataset.download_url }}" target="_blank" class="btn btn-sm btn-success">
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                            {% endif %}
+                            {% if dataset.documentation_url %}
+                            <a href="{{ dataset.documentation_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-book"></i> Documentation
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share Card -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Share Dataset</h5>
+                        <div class="d-flex gap-2">
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="copyToClipboard('{{ request.url }}')">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

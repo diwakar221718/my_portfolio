@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Datasets - Data Science & AI/ML Portfolio{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 text-center">Datasets</h1>
+        <p class="text-center">Datasets created and curated for research and projects</p>
+    </div>
+</section>
+
+<!-- Filters and Search -->
+<section class="py-4 border-bottom">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <form method="get" class="d-flex gap-2">
+                    <input type="text" name="search" class="form-control" placeholder="Search datasets..." value="{{ search or '' }}">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form method="get" class="d-flex gap-2">
+                    <select name="type" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Data Types</option>
+                        {% for dt in data_types %}
+                        <option value="{{ dt[0] }}" {% if data_type == dt[0] %}selected{% endif %}>{{ dt[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Datasets Grid -->
+<section class="py-5">
+    <div class="container">
+        {% if datasets.items %}
+        <div class="row g-4">
+            {% for dataset in datasets.items %}
+            <div class="col-12">
+                <div class="card shadow-sm hover-card">
+                    <div class="row g-0">
+                        <!-- Left side: Icon/Image placeholder -->
+                        <div class="col-md-3 bg-success d-flex align-items-center justify-content-center" style="min-height: 200px;">
+                            <div class="text-center text-white">
+                                <i class="fas fa-database fa-3x mb-2"></i>
+                                <p class="small">{{ dataset.data_type }}</p>
+                            </div>
+                        </div>
+                        <!-- Right side: Content -->
+                        <div class="col-md-9">
+                            <div class="card-body d-flex flex-column h-100">
+                                <h5 class="card-title">{{ dataset.name }}</h5>
+                                <p class="card-text text-muted flex-grow-1">{{ dataset.description }}</p>
+                                
+                                <div class="mb-3">
+                                    <span class="badge bg-info">{{ dataset.format }}</span>
+                                    <span class="badge bg-secondary">{{ dataset.size }}</span>
+                                </div>
+                                
+                                <div class="d-flex gap-2 justify-content-end mb-3">
+                                    <a href="{{ url_for('dataset_detail', dataset_id=dataset.id) }}" class="btn btn-sm btn-primary">
+                                        View Details
+                                    </a>
+                                    {% if dataset.download_url %}
+                                    <a href="{{ dataset.download_url }}" target="_blank" class="btn btn-sm btn-outline-success">
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                
+                                {% if dataset.creation_date %}
+                                <div class="text-muted small border-top pt-2">
+                                    <i class="fas fa-calendar"></i> {{ dataset.creation_date.strftime('%b %Y') }}
+                                </div>
+                                {% else %}
+                                <div class="text-muted small border-top pt-2">
+                                    <i class="fas fa-calendar"></i> N/A
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if datasets.pages > 1 %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if datasets.has_prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('datasets', page=datasets.prev_num, search=search, type=data_type) }}">
+                        Previous
+                    </a>
+                </li>
+                {% endif %}
+
+                {% for page_num in datasets.iter_pages() %}
+                    {% if page_num %}
+                        {% if page_num == datasets.page %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('datasets', page=page_num, search=search, type=data_type) }}">
+                                {{ page_num }}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if datasets.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('datasets', page=datasets.next_num, search=search, type=data_type) }}">
+                        Next
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+
+        {% else %}
+        <div class="alert alert-info text-center py-5">
+            <i class="fas fa-inbox fa-3x mb-3"></i>
+            <p class="mt-3">No datasets found. Try adjusting your search or filters.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

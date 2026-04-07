@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}{% if skill %}Edit{% else %}Add{% endif %} Skill - Admin{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 style="color: #333;">{% if skill %}Edit Skill{% else %}Add New Skill{% endif %}</h1>
+            
+            {% if not skill %}
+            <!-- Add Multiple Skills Form -->
+            <form method="POST" class="mt-4">
+                <input type="hidden" name="mode" value="multiple">
+                <div class="mb-3">
+                    <label for="category-multi" class="form-label">Category *</label>
+                    <select class="form-select" id="category-multi" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Programming Languages">Programming Languages</option>
+                        <option value="Machine Learning & AI">Machine Learning & AI</option>
+                        <option value="Frameworks & Libraries">Frameworks & Libraries</option>
+                        <option value="Technologies & Tools">Technologies & Tools</option>
+                        <option value="Databases">Databases</option>
+                        <option value="Cloud Platforms">Cloud Platforms</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="skills-multi" class="form-label">Skill Names *</label>
+                    <textarea class="form-control" id="skills-multi" name="skills" placeholder="Enter skill names separated by comma&#10;e.g., Python, JavaScript, Java, C++" rows="6" required></textarea>
+                    <small class="text-muted">Enter multiple skill names separated by commas. Each will be added to the selected category.</small>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Add Skills</button>
+                    <a href="{{ url_for('admin_skills') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary ms-auto">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </form>
+            {% else %}
+            <!-- Edit Single Skill -->
+            <form method="POST" class="mt-4">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Skill Names *</label>
+                    <textarea class="form-control" id="name" name="name" placeholder="e.g., Python, JavaScript, Java" rows="3" required>{{ skill.name }}</textarea>
+                    <small class="text-muted">Enter skill names separated by commas. Each will be added/updated to the selected category.</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category *</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Programming Languages" {% if skill.category == 'Programming Languages' %}selected{% endif %}>Programming Languages</option>
+                        <option value="Machine Learning & AI" {% if skill.category == 'Machine Learning & AI' %}selected{% endif %}>Machine Learning & AI</option>
+                        <option value="Frameworks & Libraries" {% if skill.category == 'Frameworks & Libraries' %}selected{% endif %}>Frameworks & Libraries</option>
+                        <option value="Technologies & Tools" {% if skill.category == 'Technologies & Tools' %}selected{% endif %}>Technologies & Tools</option>
+                        <option value="Databases" {% if skill.category == 'Databases' %}selected{% endif %}>Databases</option>
+                        <option value="Cloud Platforms" {% if skill.category == 'Cloud Platforms' %}selected{% endif %}>Cloud Platforms</option>
+                        <option value="Other" {% if skill.category == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Update Skill</button>
+                    <a href="{{ url_for('admin_skills') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary ms-auto">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    body:not(.dark-mode) h1 {
+        color: #333 !important;
+    }
+    
+    body:not(.dark-mode) .form-label {
+        color: #333 !important;
+        font-weight: 500;
+    }
+    
+    body:not(.dark-mode) .form-control,
+    body:not(.dark-mode) .form-select {
+        background-color: #fff !important;
+        color: #333 !important;
+        border-color: #ddd !important;
+    }
+    
+    body:not(.dark-mode) .form-control:focus,
+    body:not(.dark-mode) .form-select:focus {
+        background-color: #fff !important;
+        color: #333 !important;
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+    
+    body.dark-mode .form-label {
+        color: #e0e0e0 !important;
+    }
+</style>
+{% endblock %}

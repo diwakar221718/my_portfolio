@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Data Science & AI/ML Portfolio{% endblock %}</title>
+    <meta name="description" content="{% block description %}Professional portfolio showcasing ML projects, research, and expertise{% endblock %}">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">
+                <i class="fas fa-brain"></i> Diwakar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('projects') }}">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('skills') }}">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('datasets') }}">Datasets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('resume') }}">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('blog') }}">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-5 mt-5" style="background-color: #212529 !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: white !important;">About</h5>
+                    <p style="color: white !important;">Data Science & AI/ML Engineer passionate about building intelligent solutions.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: white !important;">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('projects') }}" style="color: white !important; text-decoration: none;">Projects</a></li>
+                        <li><a href="{{ url_for('datasets') }}" style="color: white !important; text-decoration: none;">Datasets</a></li>
+                        <li><a href="{{ url_for('blog') }}" style="color: white !important; text-decoration: none;">Blog</a></li>
+                        <li><a href="{{ url_for('contact') }}" style="color: white !important; text-decoration: none;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5 style="color: white !important;">Connect</h5>
+                    <div class="social-links">
+                        {% if about and about.github_url %}
+                        <a href="{{ about.github_url }}" target="_blank" style="color: white !important; margin-right: 1rem;"><i class="fab fa-github fa-lg"></i></a>
+                        {% endif %}
+                        {% if about and about.linkedin_url %}
+                        <a href="{{ about.linkedin_url }}" target="_blank" style="color: white !important; margin-right: 1rem;"><i class="fab fa-linkedin fa-lg"></i></a>
+                        {% endif %}
+                        {% if about and about.kaggle_url %}
+                        <a href="{{ about.kaggle_url }}" target="_blank" style="color: white !important;"><i class="fab fa-kaggle fa-lg"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <hr style="background-color: white !important; border-color: white !important;">
+            <div class="text-center">
+                <p style="color: white !important;">&copy; 2026 Data Science Portfolio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+    
+    <style>
+        /* Page Header Styling */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            padding: 4rem 0 !important;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .page-header > .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-header h1 {
+            color: white !important;
+            font-weight: 700 !important;
+            font-size: 3rem !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .page-header p {
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-size: 1.2rem !important;
+            font-weight: 400 !important;
+            max-width: 800px !important;
+            margin: 0 auto !important;
+        }
+        
+        /* Dark Mode Page Header */
+        body.dark-mode .page-header {
+            background: linear-gradient(135deg, #1a3a5a 0%, #2a4a7a 100%);
+        }
+        
+        /* Light Mode Page Header */
+        body:not(.dark-mode) .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* Resume Section Dark Mode */
+        body.dark-mode .resume-section {
+            background-color: #2d2d2d !important;
+        }
+        
+        body.dark-mode .resume-section h1,
+        body.dark-mode .resume-section h2,
+        body.dark-mode .resume-section h3,
+        body.dark-mode .resume-section h4,
+        body.dark-mode .resume-section h5,
+        body.dark-mode .resume-section h6 {
+            color: #fff !important;
+        }
+        
+        body.dark-mode .resume-section p {
+            color: #b0b8c1 !important;
+        }
+        
+        /* Global Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a2a3a;
+            color: #fff;
+        }
+        
+        body.dark-mode .card {
+            background-color: #243447 !important;
+            border-color: #3a5a7a !important;
+            color: #fff;
+        }
+        
+        body.dark-mode .card-title,
+        body.dark-mode .card-header {
+            color: #fff !important;
+        }
+        
+        body.dark-mode .card-text,
+        body.dark-mode .card-body {
+            color: #b0b8c1 !important;
+        }
+        
+        body.dark-mode .card-footer {
+            background-color: #1a2a3a !important;
+            border-color: #3a5a7a !important;
+            color: #999 !important;
+        }
+        
+        body.dark-mode .badge {
+            background-color: #444 !important;
+            color: #fff !important;
+        }
+        
+        body.dark-mode .bg-light {
+            background-color: #3d3d3d !important;
+        }
+        
+        body.dark-mode .text-muted {
+            color: #999 !important;
+        }
+        
+        body.dark-mode .border-bottom,
+        body.dark-mode .border-top,
+        body.dark-mode .border {
+            border-color: #444 !important;
+        }
+        
+        body.dark-mode section.py-5.bg-light {
+            background-color: #1a2a3a !important;
+        }
+        
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode h4,
+        body.dark-mode h5,
+        body.dark-mode h6 {
+            color: #fff !important;
+        }
+        
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: #3d3d3d !important;
+            border-color: #555 !important;
+            color: #fff !important;
+        }
+        
+        body.dark-mode .form-control::placeholder {
+            color: #999 !important;
+        }
+        
+        body.dark-mode .btn-outline-secondary {
+            color: #fff;
+            border-color: #555;
+        }
+        
+        body.dark-mode .btn-outline-secondary:hover {
+            background-color: #555;
+            border-color: #555;
+        }
+        
+        body.dark-mode .alert {
+            background-color: #243447 !important;
+            border-color: #3a5a7a !important;
+            color: #fff !important;
+        }
+        
+        body.dark-mode .list-group-item {
+            background-color: #243447 !important;
+            border-color: #3a5a7a !important;
+            color: #fff !important;
+        }
+        
+        body.dark-mode .table {
+            color: #fff;
+            border-color: #444;
+        }
+        
+        body.dark-mode .table thead {
+            border-color: #444;
+        }
+        
+        body.dark-mode .table tbody tr {
+            border-color: #444;
+        }
+        
+        body.dark-mode .table tbody tr:hover {
+            background-color: #243447 !important;
+        }
+        
+        body.dark-mode .dropdown-menu {
+            background-color: #243447 !important;
+            border-color: #3a5a7a !important;
+        }
+        
+        body.dark-mode .dropdown-item {
+            color: #fff !important;
+        }
+        
+        body.dark-mode .dropdown-item:hover {
+            background-color: #3a5a7a !important;
+        }
+        
+        body.dark-mode .pagination .page-link {
+            background-color: #243447 !important;
+            border-color: #3a5a7a !important;
+            color: #fff !important;
+        }
+        
+        body.dark-mode .pagination .page-link:hover {
+            background-color: #3a5a7a !important;
+            border-color: #5a7a9a !important;
+        }
+    </style>
+</body>
+</html>
