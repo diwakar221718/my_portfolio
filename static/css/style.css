@@ -95,7 +95,7 @@ body.dark-mode footer {
 
 .hero-image {
     text-align: center;
-    animation: float 3s ease-in-out infinite;
+    animation: none !important;
 }
 
 @keyframes float {
