@@ -1139,8 +1139,13 @@ def server_error(error):
 @app.context_processor
 def inject_about():
     """Inject about info into all templates"""
-    about = About.query.first()
-    return dict(about=about)
+    try:
+        about = About.query.first()
+        return dict(about=about)
+    except Exception as e:
+        # If database query fails, return empty dict
+        print(f"⚠ Error loading about info: {e}")
+        return dict(about=None)
 
 
 @app.route('/download/dataset/<int:dataset_id>')
