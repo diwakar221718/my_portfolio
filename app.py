@@ -1220,6 +1220,16 @@ def init_db():
             db.session.rollback()
 
 
+@app.route('/init-db')
+def init_database():
+    """Initialize database - visit this route once to set up tables"""
+    try:
+        init_db()
+        return jsonify({'status': 'success', 'message': 'Database initialized successfully. Admin user: admin / admin123'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
 if __name__ == '__main__':
     # Initialize database on startup
     init_db()
