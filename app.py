@@ -251,9 +251,15 @@ class Admin(db.Model):
 @app.route('/')
 def home():
     """Homepage"""
-    featured_projects = Project.query.filter_by(featured=True).limit(5).all()
-    recent_articles = BlogArticle.query.filter_by(featured=True).order_by(BlogArticle.published_date.desc()).limit(3).all()
-    about = About.query.first()
+    try:
+        featured_projects = Project.query.filter_by(featured=True).limit(5).all()
+        recent_articles = BlogArticle.query.filter_by(featured=True).order_by(BlogArticle.published_date.desc()).limit(3).all()
+        about = About.query.first()
+    except Exception as e:
+        print(f"⚠ Error loading home data: {e}")
+        featured_projects = []
+        recent_articles = []
+        about = None
     return render_template('index.html', featured_projects=featured_projects, recent_articles=recent_articles, about=about)
 
 
@@ -1144,12 +1150,10 @@ def server_error(error):
 def inject_about():
     """Inject about info into all templates"""
     try:
-        # Try to query About, but catch any errors
         about = About.query.first()
-        return dict(about=about)
-    except Exception as e:
-        # If any error occurs, return None
-        return dict(about=None)
+    except:
+        about = None
+    return dict(about=about)
 
 
 @app.route('/download/dataset/<int:dataset_id>')
