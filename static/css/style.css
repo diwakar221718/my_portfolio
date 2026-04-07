@@ -355,6 +355,7 @@ body.dark-mode .form-select {
 @media (max-width: 768px) {
     .hero-section {
         min-height: 400px;
+        padding: 2rem 1rem;
     }
 
     h1 {
@@ -367,6 +368,344 @@ body.dark-mode .form-select {
 
     .card {
         margin-bottom: 20px;
+    }
+
+    /* Mobile navbar */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .nav-link {
+        margin-left: 0;
+        padding: 0.5rem 0 !important;
+    }
+
+    /* Mobile profile image */
+    .profile-image-container {
+        width: 200px;
+        height: 200px;
+        border-width: 5px;
+    }
+
+    .profile-designation {
+        font-size: 1.4rem;
+    }
+
+    .profile-address {
+        font-size: 0.95rem;
+    }
+
+    /* Mobile cards */
+    .skill-card {
+        padding: 1.5rem 1rem;
+        min-height: 150px;
+    }
+
+    .skill-card h5 {
+        font-size: 0.95rem;
+        min-height: auto;
+    }
+
+    .skill-card p {
+        font-size: 0.85rem;
+        min-height: auto;
+    }
+
+    .skill-card i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Mobile education/experience cards */
+    .education-card-new,
+    .experience-card-new,
+    .experience-card-full {
+        flex-direction: column;
+        padding: 1.2rem;
+    }
+
+    .education-icon-new,
+    .experience-icon-new,
+    .experience-icon-box {
+        width: 100%;
+        min-width: auto;
+        margin-bottom: 1rem;
+    }
+
+    .education-degree-new,
+    .experience-degree-new,
+    .experience-title {
+        font-size: 0.95rem;
+    }
+
+    /* Mobile certification cards */
+    .certification-card-horizontal {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .cert-image-section {
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+    }
+
+    .cert-content-section {
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .certification-card-new {
+        flex-direction: column;
+    }
+
+    .cert-icon-box {
+        width: 100%;
+        min-width: auto;
+        height: 120px;
+    }
+
+    .cert-content-new {
+        padding: 1rem;
+    }
+
+    /* Mobile skills section */
+    .skills-category-card {
+        padding: 1.5rem 1rem;
+        min-height: auto;
+    }
+
+    .skills-category-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    .skill-box {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.8rem;
+    }
+
+    /* Mobile top skills */
+    .top-skill-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .top-skill-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .top-skill-name {
+        font-size: 0.95rem;
+    }
+
+    /* Mobile keywords/hobbies */
+    .keywords-container,
+    .hobbies-container {
+        gap: 0.5rem;
+    }
+
+    .keyword-badge,
+    .hobby-badge {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    /* Mobile buttons */
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+    }
+
+    /* Mobile forms */
+    .form-control,
+    .form-select {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    /* Mobile hero text */
+    .hero-section h1,
+    .hero-section .display-4,
+    .hero-section p,
+    .hero-section .lead {
+        font-size: 1.2rem;
+    }
+
+    /* Mobile CTA section */
+    .cta-section {
+        padding: 2rem 1rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Mobile footer */
+    footer {
+        padding: 1.5rem 1rem;
+    }
+
+    footer h5 {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Mobile pagination */
+    .pagination {
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+
+    .page-link {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.85rem;
+    }
+
+    /* Mobile container padding */
+    .container,
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Mobile sections */
+    section {
+        padding: 2rem 1rem !important;
+    }
+
+    /* Mobile row spacing */
+    .row {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+    }
+
+    .col-md-6,
+    .col-lg-4,
+    .col-lg-3 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Extra small devices */
+    .hero-section {
+        min-height: 300px;
+        padding: 1.5rem 0.75rem;
+    }
+
+    h1,
+    .display-4 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    .profile-image-container {
+        width: 150px;
+        height: 150px;
+        border-width: 4px;
+    }
+
+    .profile-designation {
+        font-size: 1.1rem;
+    }
+
+    .skill-card {
+        padding: 1rem;
+        min-height: 120px;
+    }
+
+    .skill-card i {
+        font-size: 1.5rem;
+    }
+
+    .education-card-new,
+    .experience-card-new,
+    .experience-card-full,
+    .certification-card-new {
+        padding: 1rem;
+    }
+
+    .skills-category-card {
+        padding: 1rem;
+    }
+
+    .skills-category-title {
+        font-size: 1.1rem;
+    }
+
+    .skill-box {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+
+    .keyword-badge,
+    .hobby-badge {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.75rem;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .cta-section {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .cta-section h2 {
+        font-size: 1.3rem;
+    }
+
+    section {
+        padding: 1.5rem 0.75rem !important;
+    }
+
+    .container,
+    .container-fluid {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    /* Mobile table */
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+    }
+
+    /* Mobile navbar */
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    /* Mobile footer */
+    footer {
+        padding: 1rem 0.75rem;
+    }
+
+    footer h5 {
+        font-size: 0.95rem;
+    }
+
+    footer p {
+        font-size: 0.85rem;
     }
 }
 
