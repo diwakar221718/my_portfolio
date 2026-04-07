@@ -1143,21 +1143,6 @@ def inject_about():
     return dict(about=about)
 
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    
-    # Get port from environment or use default 5000
-    port = int(os.getenv('PORT', 5000))
-    
-    # Run Flask app
-    app.run(
-        host='0.0.0.0',
-        port=port,
-        debug=True
-    )
-
-
 @app.route('/download/dataset/<int:dataset_id>')
 def download_dataset(dataset_id):
     """Download dataset file"""
@@ -1198,5 +1183,40 @@ def migrate_dataset_file_path():
         return jsonify({'status': 'error', 'message': str(e)})
 
 
+# ==================== DATABASE INITIALIZATION ====================
+
+def init_db():
+    """Initialize database and create default admin user"""
+    with app.app_context():
+        try:
+            # Create all tables
+            db.create_all()
+            
+            # Create default admin user if it doesn't exist
+            admin_exists = Admin.query.filter_by(username='admin').first()
+            if not admin_exists:
+                admin = Admin(username='admin', email='admin@portfolio.com')
+                admin.set_password('admin123')
+                db.session.add(admin)
+                db.session.commit()
+                print("✓ Default admin user created: admin / admin123")
+            else:
+                print("✓ Admin user already exists")
+        except Exception as e:
+            print(f"✗ Database initialization error: {e}")
+            db.session.rollback()
+
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 5000)))
+    # Initialize database on startup
+    init_db()
+    
+    # Get port from environment or use default 5000
+    port = int(os.getenv('PORT', 5000))
+    
+    # Run Flask app
+    app.run(
+        host='0.0.0.0',
+        port=port,
+        debug=False
+    )
