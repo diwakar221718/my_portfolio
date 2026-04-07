@@ -358,6 +358,10 @@ body.dark-mode .form-select {
         padding: 2rem 1rem;
     }
 
+    .hero-image {
+        margin-top: 2rem;
+    }
+
     h1 {
         font-size: 2rem;
     }
@@ -597,6 +601,10 @@ body.dark-mode .form-select {
     .hero-section {
         min-height: 300px;
         padding: 1.5rem 0.75rem;
+    }
+
+    .hero-image {
+        margin-top: 2.5rem;
     }
 
     h1,
