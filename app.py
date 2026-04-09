@@ -418,19 +418,23 @@ def contact_success():
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
     """Admin login"""
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+    try:
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            
+            admin = Admin.query.filter_by(username=username).first()
+            
+            if admin and admin.check_password(password):
+                session['admin_id'] = admin.id
+                return redirect(url_for('admin_dashboard'))
+            else:
+                return render_template('admin_login.html', error='Invalid credentials')
         
-        admin = Admin.query.filter_by(username=username).first()
-        
-        if admin and admin.check_password(password):
-            session['admin_id'] = admin.id
-            return redirect(url_for('admin_dashboard'))
-        else:
-            return render_template('admin_login.html', error='Invalid credentials')
-    
-    return render_template('admin_login.html')
+        return render_template('admin_login.html')
+    except Exception as e:
+        print(f"Admin login error: {e}")
+        return render_template('admin_login.html', error=f'Error: {str(e)}')
 
 
 @app.route('/admin/logout')
