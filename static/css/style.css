@@ -480,12 +480,41 @@ body.dark-mode .form-select {
     .cert-icon-box {
         width: 100%;
         min-width: auto;
-        height: 120px;
+        height: 150px;
         order: -1;
     }
 
     .cert-content-new {
         padding: 1rem;
+    }
+
+    .cert-tags {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .cert-tag {
+        width: 100%;
+        white-space: normal;
+        text-align: left;
+    }
+
+    .cert-title-new {
+        font-size: 1rem;
+    }
+
+    .cert-issuer-new {
+        font-size: 0.85rem;
+    }
+
+    .cert-description-new {
+        font-size: 0.85rem;
+    }
+
+    .cert-buttons-right {
+        justify-content: flex-start;
+        margin-top: 0.75rem;
     }
 
     /* Mobile skills section */
