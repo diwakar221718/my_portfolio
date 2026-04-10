@@ -446,5 +446,26 @@
     body.dark-mode .cta-section .lead {
         color: rgba(255, 255, 255, 0.95) !important;
     }
+    
+    /* Mobile blog card layout */
+    @media (max-width: 768px) {
+        article.card .row {
+            flex-direction: column;
+        }
+        
+        article.card .col-md-3 {
+            width: 100%;
+            min-height: 200px;
+            order: -1;
+        }
+        
+        article.card .col-md-9 {
+            width: 100%;
+        }
+        
+        .blog-image-container {
+            min-height: 200px;
+        }
+    }
 </style>
 {% endblock %}

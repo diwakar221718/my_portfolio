@@ -202,5 +202,26 @@
     body.dark-mode h5 {
         color: #fff !important;
     }
+    
+    /* Mobile blog card layout */
+    @media (max-width: 768px) {
+        .card .row {
+            flex-direction: column;
+        }
+        
+        .card .col-md-3 {
+            width: 100%;
+            min-height: 200px;
+            order: -1;
+        }
+        
+        .card .col-md-9 {
+            width: 100%;
+        }
+        
+        .blog-image-container {
+            min-height: 200px;
+        }
+    }
 </style>
 {% endblock %}
