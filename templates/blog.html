@@ -29,11 +29,11 @@
         {% if articles.items %}
         <div class="row g-4">
             {% for article in articles.items %}
-            <div class="col-12">
-                <article class="card shadow-sm hover-card">
+            <div class="col-md-12">
+                <article class="card h-100 shadow-sm hover-card">
                     <div class="row g-0">
                         <!-- Left side: Image -->
-                        <div class="col-md-3" style="min-height: 200px;">
+                        <div class="col-md-3">
                             <div class="blog-image-container h-100">
                                 {% if article.image_url %}
                                 <img src="{{ article.image_url }}" class="blog-image" alt="{{ article.title }}">
@@ -120,47 +120,6 @@
 </section>
 
 <style>
-    /* Blog Image Container Styling */
-    .blog-image-container {
-        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        min-height: 200px;
-        background-color: #1abc9c !important;
-    }
-    
-    .blog-image {
-        max-width: 100%;
-        max-height: 100%;
-        width: calc(100% - 40px);
-        height: calc(100% - 40px);
-        object-fit: cover;
-        border-radius: 8px;
-        background: transparent;
-        padding: 20px;
-        margin: 10px auto;
-        display: block;
-        border: 3px solid white;
-        box-shadow: 0 0 0 8px #1abc9c, 0 0 0 11px white;
-    }
-    
-    .blog-image-placeholder {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        background: #1abc9c;
-        border-radius: 0;
-    }
-    
-    body.dark-mode .blog-image-container {
-        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
-    }
-    
     /* Dark mode styles */
     body.dark-mode .card {
         background-color: #2d2d2d !important;
@@ -206,6 +165,10 @@
     body.dark-mode h1,
     body.dark-mode h5 {
         color: #fff !important;
+    }
+    
+    body.dark-mode .blog-image-container {
+        background: #4A90E2;
     }
     
     /* Mobile blog card layout */
