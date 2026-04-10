@@ -456,11 +456,21 @@ body.dark-mode .form-select {
         width: 100%;
         min-height: 150px;
         padding: 1rem;
+        order: -1;
     }
 
     .cert-content-section {
         width: 100%;
         padding: 1rem;
+    }
+
+    .cert-dates {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cert-date-item {
+        margin-right: 0;
     }
 
     .certification-card-new {
@@ -471,6 +481,7 @@ body.dark-mode .form-select {
         width: 100%;
         min-width: auto;
         height: 120px;
+        order: -1;
     }
 
     .cert-content-new {
