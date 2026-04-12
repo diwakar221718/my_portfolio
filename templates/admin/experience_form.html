@@ -36,7 +36,10 @@
                 
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Job description...">{{ experience.description if experience else '' }}</textarea>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="Write your description here...&#10;&#10;You can write:&#10;- Point-wise (each point on new line)&#10;- Paragraph-wise (separate paragraphs with blank line)">{{ experience.description if experience else '' }}</textarea>
+                    <small class="text-muted d-block mt-2">
+                        <strong>Formatting Tips:</strong> Use new lines for points, blank lines to separate paragraphs
+                    </small>
                 </div>
                 
                 <div class="mb-3">

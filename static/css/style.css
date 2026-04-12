@@ -1105,7 +1105,8 @@ body:not(.dark-mode) .profile-address {
     display: flex;
     gap: 1.2rem;
     transition: all 0.3s ease;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -1130,6 +1131,8 @@ body:not(.dark-mode) .profile-address {
 
 .education-content-new {
     flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .education-degree-new {

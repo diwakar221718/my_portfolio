@@ -153,6 +153,29 @@
                             {% if edu.marks %}{{ edu.marks }}{% endif %}
                         </p>
                         {% endif %}
+                        {% if edu.description %}
+                        <div>
+                            {% set paragraphs = edu.description.split('\n\n') if edu.description else [] %}
+                            {% for paragraph in paragraphs %}
+                                {% if paragraph.strip() %}
+                                    {% set lines = paragraph.strip().split('\n') %}
+                                    {% if lines|length > 1 %}
+                                        <!-- Point-wise format -->
+                                        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+                                            {% for line in lines %}
+                                                {% if line.strip() %}
+                                                <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <!-- Paragraph format -->
+                                        <p class="education-description-new" style="margin-bottom: 1rem;">{{ paragraph.strip() }}</p>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -193,7 +216,27 @@
                             
                             {% if exp.description %}
                             <div class="experience-body">
-                                <p class="experience-description">{{ exp.description }}</p>
+                                <div>
+                                    {% set paragraphs = exp.description.split('\n\n') if exp.description else [] %}
+                                    {% for paragraph in paragraphs %}
+                                        {% if paragraph.strip() %}
+                                            {% set lines = paragraph.strip().split('\n') %}
+                                            {% if lines|length > 1 %}
+                                                <!-- Point-wise format -->
+                                                <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+                                                    {% for line in lines %}
+                                                        {% if line.strip() %}
+                                                        <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <!-- Paragraph format -->
+                                                <p class="experience-description" style="margin-bottom: 1rem;">{{ paragraph.strip() }}</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
                             {% endif %}
                         </div>

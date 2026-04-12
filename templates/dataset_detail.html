@@ -37,7 +37,27 @@
                 <!-- Overview -->
                 <div class="mb-5">
                     <h3 class="mb-3">Dataset Overview</h3>
-                    <p>{{ dataset.description }}</p>
+                    <div>
+                        {% set paragraphs = dataset.description.split('\n\n') if dataset.description else [] %}
+                        {% for paragraph in paragraphs %}
+                            {% if paragraph.strip() %}
+                                {% set lines = paragraph.strip().split('\n') %}
+                                {% if lines|length > 1 %}
+                                    <!-- Point-wise format -->
+                                    <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                                        {% for line in lines %}
+                                            {% if line.strip() %}
+                                            <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <!-- Paragraph format -->
+                                    <p style="margin-bottom: 1.5rem;">{{ paragraph.strip() }}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
 
                 <!-- Specifications -->

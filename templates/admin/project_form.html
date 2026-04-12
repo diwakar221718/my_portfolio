@@ -21,7 +21,10 @@
                 
                 <div class="mb-3">
                     <label for="detailed_description" class="form-label">Detailed Description</label>
-                    <textarea class="form-control" id="detailed_description" name="detailed_description" rows="5">{{ project.detailed_description if project else '' }}</textarea>
+                    <textarea class="form-control" id="detailed_description" name="detailed_description" rows="5" placeholder="Write your description here...&#10;&#10;You can write:&#10;- Point-wise (each point on new line)&#10;- Paragraph-wise (separate paragraphs with blank line)&#10;&#10;Example:&#10;Developed a machine learning model&#10;Achieved 95% accuracy&#10;&#10;Deployed to production environment.">{{ project.detailed_description if project else '' }}</textarea>
+                    <small class="text-muted d-block mt-2">
+                        <strong>Formatting Tips:</strong> Use new lines for points, blank lines to separate paragraphs
+                    </small>
                 </div>
                 
                 <div class="mb-3">
@@ -66,12 +69,18 @@
                 
                 <div class="mb-3">
                     <label for="outcomes" class="form-label">Key Outcomes</label>
-                    <textarea class="form-control" id="outcomes" name="outcomes" rows="3">{{ project.outcomes if project else '' }}</textarea>
+                    <textarea class="form-control" id="outcomes" name="outcomes" rows="3" placeholder="Write your outcomes here...&#10;&#10;You can write:&#10;- Point-wise (each point on new line)&#10;- Paragraph-wise (separate paragraphs with blank line)">{{ project.outcomes if project else '' }}</textarea>
+                    <small class="text-muted d-block mt-2">
+                        <strong>Formatting Tips:</strong> Use new lines for points, blank lines to separate paragraphs
+                    </small>
                 </div>
                 
                 <div class="mb-3">
                     <label for="performance_metrics" class="form-label">Performance Metrics</label>
-                    <input type="text" class="form-control" id="performance_metrics" name="performance_metrics" placeholder="e.g., Accuracy: 95%, F1-Score: 0.92" value="{{ project.performance_metrics if project else '' }}">
+                    <textarea class="form-control" id="performance_metrics" name="performance_metrics" rows="3" placeholder="Write your metrics here...&#10;&#10;You can write:&#10;- Point-wise (each point on new line)&#10;- Paragraph-wise (separate paragraphs with blank line)&#10;&#10;Example:&#10;Accuracy: 95%&#10;F1-Score: 0.92&#10;Precision: 0.94">{{ project.performance_metrics if project else '' }}</textarea>
+                    <small class="text-muted d-block mt-2">
+                        <strong>Formatting Tips:</strong> Use new lines for points, blank lines to separate paragraphs
+                    </small>
                 </div>
                 
                 <div class="mb-3 form-check">

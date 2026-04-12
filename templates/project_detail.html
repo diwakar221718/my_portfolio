@@ -63,7 +63,27 @@
                 {% if project.detailed_description %}
                 <div class="mb-5">
                     <h3 class="mb-3">Project Overview</h3>
-                    <p>{{ project.detailed_description }}</p>
+                    <div>
+                        {% set paragraphs = project.detailed_description.split('\n\n') if project.detailed_description else [] %}
+                        {% for paragraph in paragraphs %}
+                            {% if paragraph.strip() %}
+                                {% set lines = paragraph.strip().split('\n') %}
+                                {% if lines|length > 1 %}
+                                    <!-- Point-wise format -->
+                                    <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                                        {% for line in lines %}
+                                            {% if line.strip() %}
+                                            <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <!-- Paragraph format -->
+                                    <p style="margin-bottom: 1.5rem;">{{ paragraph.strip() }}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endif %}
 
@@ -86,7 +106,27 @@
                 <div class="mb-5">
                     <h3 class="mb-3">Performance Metrics</h3>
                     <div class="alert alert-info">
-                        <p>{{ project.performance_metrics }}</p>
+                        <div>
+                            {% set paragraphs = project.performance_metrics.split('\n\n') if project.performance_metrics else [] %}
+                            {% for paragraph in paragraphs %}
+                                {% if paragraph.strip() %}
+                                    {% set lines = paragraph.strip().split('\n') %}
+                                    {% if lines|length > 1 %}
+                                        <!-- Point-wise format -->
+                                        <ul style="margin-bottom: 1rem; padding-left: 1.5rem;">
+                                            {% for line in lines %}
+                                                {% if line.strip() %}
+                                                <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <!-- Paragraph format -->
+                                        <p style="margin-bottom: 1rem;">{{ paragraph.strip() }}</p>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 {% endif %}
@@ -95,7 +135,27 @@
                 {% if project.outcomes %}
                 <div class="mb-5">
                     <h3 class="mb-3">Outcomes & Impact</h3>
-                    <p>{{ project.outcomes }}</p>
+                    <div>
+                        {% set paragraphs = project.outcomes.split('\n\n') if project.outcomes else [] %}
+                        {% for paragraph in paragraphs %}
+                            {% if paragraph.strip() %}
+                                {% set lines = paragraph.strip().split('\n') %}
+                                {% if lines|length > 1 %}
+                                    <!-- Point-wise format -->
+                                    <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                                        {% for line in lines %}
+                                            {% if line.strip() %}
+                                            <li style="margin-bottom: 0.5rem;">{{ line.strip() }}</li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <!-- Paragraph format -->
+                                    <p style="margin-bottom: 1.5rem;">{{ paragraph.strip() }}</p>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endif %}
             </div>
