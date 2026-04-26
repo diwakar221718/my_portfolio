@@ -858,6 +858,9 @@ def admin_about():
                 filename = secure_filename(f"{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{file.filename}")
                 file.save(os.path.join(app.config['UPLOAD_FOLDER_IMAGES'], filename))
                 about.photo_url = url_for('static', filename=f'uploads/{filename}', _external=False)
+        elif request.form.get('existing_photo_url'):
+            # Keep existing photo if no new file uploaded
+            about.photo_url = request.form.get('existing_photo_url')
         
         about.biography = request.form.get('biography')
         about.address = request.form.get('address')

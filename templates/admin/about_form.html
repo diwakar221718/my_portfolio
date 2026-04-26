@@ -25,12 +25,13 @@
                 <div class="mb-3">
                     <label for="photo_file" class="form-label">Profile Photo</label>
                     <input type="file" class="form-control" id="photo_file" name="photo_file" accept="image/*">
-                    <small class="text-muted">Upload JPG, PNG, or other image formats</small>
+                    <small class="text-muted">Upload JPG, PNG, or other image formats. Leave empty to keep current photo.</small>
                     {% if about and about.photo_url %}
                     <div class="mt-2">
                         <p class="text-muted mb-2">Current photo:</p>
                         <img src="{{ about.photo_url }}" alt="Current Photo" style="max-width: 150px; border-radius: 10px;">
                     </div>
+                    <input type="hidden" name="existing_photo_url" value="{{ about.photo_url }}">
                     {% endif %}
                 </div>
                 
